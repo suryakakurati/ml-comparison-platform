@@ -1,0 +1,52 @@
+{
+  "study_name": "logistic_regression_optimization",
+  "timestamp": "20251004_113845",
+  "best_params": {
+    "C": 5.741376106639153,
+    "penalty": "l2"
+  },
+  "best_score": 0.8053351055334469,
+  "n_trials": 30,
+  "top_trials": [
+    {
+      "trial_number": 7,
+      "params": {
+        "C": 5.741376106639153,
+        "penalty": "l2"
+      },
+      "score": 0.8053351055334469
+    },
+    {
+      "trial_number": 10,
+      "params": {
+        "C": 7.796753870891782,
+        "penalty": "l2"
+      },
+      "score": 0.8053351055334469
+    },
+    {
+      "trial_number": 11,
+      "params": {
+        "C": 7.456587559824923,
+        "penalty": "l2"
+      },
+      "score": 0.8053351055334469
+    },
+    {
+      "trial_number": 12,
+      "params": {
+        "C": 7.12312563282805,
+        "penalty": "l2"
+      },
+      "score": 0.8053351055334469
+    },
+    {
+      "trial_number": 13,
+      "params": {
+        "C": 2.0829267847693473,
+        "penalty": "l2"
+      },
+      "score": 0.8053351055334469
+    }
+  ]
+}

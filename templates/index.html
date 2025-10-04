@@ -1,0 +1,320 @@
+<div class="auto-form">
+                <div class="form-group">
+                <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Comparison Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">ML LAB</span>
+            </div>
+            <div class="nav-links">
+                <a href="#upload" class="nav-link active" data-section="upload">Upload</a>
+                <a href="#train" class="nav-link" data-section="train">Train</a>
+                <a href="#auto" class="nav-link" data-section="auto">Auto-Optimize</a>
+                <a href="#results" class="nav-link" data-section="results">Results</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">TRAIN & COMPARE<br>ML MODELS</h1>
+            <p class="hero-subtitle">
+                Upload your dataset, configure hyperparameters, and discover the best machine learning model 
+                for your data. Powered by automated optimization and comprehensive performance metrics.
+            </p>
+            <button class="cta-button" onclick="scrollToSection('upload')">Get Started</button>
+            <div class="hero-stats">
+                <span class="stat-item">AUTO</span>
+                <span class="stat-divider">—</span>
+                <span class="stat-item">OPTIMIZE</span>
+                <span class="stat-divider">—</span>
+                <span class="stat-item">COMPARE</span>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="disco-ball"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Upload Section -->
+        <section id="upload" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Upload Your Dataset</h2>
+                <p class="section-description">Start by uploading a CSV file containing your training data</p>
+            </div>
+            
+            <div class="upload-area" id="dropZone">
+                <div class="upload-icon">📊</div>
+                <h3 class="upload-title">Drop your CSV file here</h3>
+                <p class="upload-text">or click to browse</p>
+                <input type="file" id="fileInput" accept=".csv" hidden>
+                <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+            </div>
+
+            <div id="datasetInfo" class="dataset-info" style="display: none;">
+                <div class="info-card">
+                    <div class="info-row">
+                        <span class="info-label">Filename:</span>
+                        <span class="info-value" id="fileName"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Rows:</span>
+                        <span class="info-value" id="rowCount"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Columns:</span>
+                        <span class="info-value" id="colCount"></span>
+                    </div>
+                </div>
+                
+                <div class="preview-section">
+                    <h3 class="preview-title">Dataset Preview</h3>
+                    <div class="table-container">
+                        <table id="previewTable" class="data-table"></table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manual Training Section -->
+        <section id="train" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Manual Training</h2>
+                <p class="section-description">Configure and train individual models</p>
+            </div>
+
+            <div class="training-form">
+                <div class="form-group">
+                    <label class="form-label">Target Column</label>
+                    <select id="targetColumn" class="form-select">
+                        <option value="">Select target column...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Model Type</label>
+                    <select id="modelType" class="form-select">
+                        <optgroup label="Traditional Models">
+                            <option value="logistic_regression">Logistic Regression</option>
+                            <option value="decision_tree">Decision Tree</option>
+                            <option value="random_forest">Random Forest</option>
+                            <option value="gradient_boosting">Gradient Boosting</option>
+                            <option value="svm">Support Vector Machine</option>
+                            <option value="neural_network">Neural Network (MLP)</option>
+                        </optgroup>
+                        <optgroup label="Advanced Models" id="advancedModelsGroup">
+                            <!-- Dynamically loaded -->
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Test Split Size</label>
+                    <input type="range" id="testSize" class="form-range" min="0.1" max="0.5" step="0.05" value="0.2">
+                    <span class="range-value" id="testSizeValue">20%</span>
+                </div>
+
+                <!-- Preprocessing Options -->
+                <div class="preprocessing-section">
+                    <h3 class="section-subtitle">⚙️ Preprocessing Options</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Missing Values Strategy</label>
+                        <select id="missingStrategy" class="form-select">
+                            <option value="mean">Mean (default)</option>
+                            <option value="median">Median</option>
+                            <option value="mode">Mode (most frequent)</option>
+                            <option value="drop">Drop rows with missing values</option>
+                        </select>
+                        <span class="form-hint">How to handle missing data</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Categorical Encoding</label>
+                        <select id="encodingStrategy" class="form-select">
+                            <option value="auto">Auto (recommended)</option>
+                            <option value="label">Label Encoding</option>
+                            <option value="onehot">One-Hot Encoding</option>
+                        </select>
+                        <span class="form-hint">How to encode text columns</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Feature Scaling</label>
+                        <select id="scalingStrategy" class="form-select">
+                            <option value="standard">Standard Scaler (default)</option>
+                            <option value="minmax">Min-Max Scaler</option>
+                            <option value="none">No Scaling</option>
+                        </select>
+                        <span class="form-hint">How to normalize features</span>
+                    </div>
+                </div>
+
+                <!-- Hyperparameter Tuning Options -->
+                <div class="preprocessing-section">
+                    <h3 class="section-subtitle">🎯 Hyperparameter Tuning</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tuning Method</label>
+                        <select id="tuningMethod" class="form-select">
+                            <option value="none">None - Use default parameters</option>
+                            <option value="grid">Grid Search - Exhaustive</option>
+                            <option value="random">Random Search - Faster</option>
+                            <option value="optuna">Optuna - Smart optimization</option>
+                        </select>
+                        <span class="form-hint">Choose hyperparameter optimization method</span>
+                    </div>
+
+                    <div class="form-group" id="cvFoldsGroup">
+                        <label class="form-label">Cross-Validation Folds</label>
+                        <input type="number" id="cvFolds" class="form-input" value="5" min="2" max="10">
+                        <span class="form-hint">Number of CV folds (2-10)</span>
+                    </div>
+
+                    <div class="form-group" id="nTrialsGroup" style="display: none;">
+                        <label class="form-label">Optuna Trials</label>
+                        <input type="number" id="nTrials" class="form-input" value="30" min="10" max="100">
+                        <span class="form-hint">Number of optimization trials</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="enableMlflow" checked>
+                            Enable MLflow Tracking
+                        </label>
+                        <span class="form-hint">Log experiments to MLflow</span>
+                    </div>
+                </div>
+
+                <div id="modelParams" class="params-grid">
+                    <!-- Dynamic parameters will be inserted here -->
+                </div>
+
+                <button class="train-button" id="trainButton" onclick="trainModel()">
+                    <span class="button-text">Train Model</span>
+                </button>
+            </div>
+
+            <div id="trainResults" class="results-container" style="display: none;"></div>
+        </section>
+
+        <!-- Auto-Optimize Section -->
+        <section id="auto" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Auto-Optimize</h2>
+                <p class="section-description">Let the system find the best model and hyperparameters automatically</p>
+            </div>
+
+            <div class="auto-form">
+                <div class="form-group">
+                    <label class="form-label">Target Column</label>
+                    <select id="autoTargetColumn" class="form-select">
+                        <option value="">Select target column...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Test Split Size</label>
+                    <input type="range" id="autoTestSize" class="form-range" min="0.1" max="0.5" step="0.05" value="0.2">
+                    <span class="range-value" id="autoTestSizeValue">20%</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Search Type</label>
+                    <select id="searchType" class="form-select">
+                        <option value="grid">Grid Search (Exhaustive)</option>
+                        <option value="random">Random Search (Faster)</option>
+                    </select>
+                </div>
+
+                <!-- Preprocessing Options for Auto-Optimize -->
+                <div class="preprocessing-section">
+                    <h3 class="section-subtitle">⚙️ Preprocessing Options</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Missing Values Strategy</label>
+                        <select id="autoMissingStrategy" class="form-select">
+                            <option value="mean">Mean (default)</option>
+                            <option value="median">Median</option>
+                            <option value="mode">Mode (most frequent)</option>
+                            <option value="drop">Drop rows with missing values</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Categorical Encoding</label>
+                        <select id="autoEncodingStrategy" class="form-select">
+                            <option value="auto">Auto (recommended)</option>
+                            <option value="label">Label Encoding</option>
+                            <option value="onehot">One-Hot Encoding</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Feature Scaling</label>
+                        <select id="autoScalingStrategy" class="form-select">
+                            <option value="standard">Standard Scaler (default)</option>
+                            <option value="minmax">Min-Max Scaler</option>
+                            <option value="none">No Scaling</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="train-button" id="autoButton" onclick="autoOptimize()">
+                    <span class="button-text">Start Auto-Optimization</span>
+                </button>
+            </div>
+
+            <div id="autoResults" class="results-container" style="display: none;"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Experiment Results</h2>
+                <p class="section-description">Compare all your trained models</p>
+                <div class="header-buttons">
+                    <button class="mlflow-button" onclick="openMLflowUI()">📊 View MLflow UI</button>
+                    <button class="clear-button" onclick="clearResults()">Clear All</button>
+                </div>
+            </div>
+
+            <div id="resultsGrid" class="results-grid">
+                <div class="empty-state">
+                    <div class="empty-icon">📈</div>
+                    <h3>No experiments yet</h3>
+                    <p>Train some models to see results here</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loader"></div>
+        <p class="loading-text">Processing...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
