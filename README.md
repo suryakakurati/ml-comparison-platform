@@ -2,7 +2,7 @@
 
 > 🧠 **AI-Assisted Development Notice**
 >
-> This project was developed by [Your Name] with assistance from Anthropic's Claude AI for code generation, optimization, and documentation support.  
+> This project was developed by Surya Akurati with assistance from Anthropic's Claude AI for code generation, optimization, and documentation support.  
 > All implementation decisions, testing, and integrations were conducted and verified by the developer.
 
 A production-ready Flask web application for training, comparing, and optimizing machine learning models with an intuitive, modern interface. 
