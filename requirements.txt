@@ -19,14 +19,14 @@ lightgbm==4.1.0
 catboost==1.2.2
 
 # macOS (Apple Silicon)
-tensorflow-macos==2.15.0; platform_system == "Darwin"
-tensorflow-metal==1.1.0; platform_system == "Darwin"
+tensorflow-macos==2.15.0 ; sys_platform == "darwin"
+tensorflow-metal==1.1.0 ; sys_platform == "darwin"
 
 # Other Platforms (Linux, Windows)
-tensorflow==2.15.0; platform_system != "Darwin"
+tensorflow==2.15.0 ; sys_platform != "darwin"
 
 # Testing
 pytest==7.4.3
 
-#Render
+# Render Deployment
 gunicorn==21.2.0
