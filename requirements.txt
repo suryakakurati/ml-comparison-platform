@@ -27,3 +27,6 @@ tensorflow==2.15.0; platform_system != "Darwin"
 
 # Testing
 pytest==7.4.3
+
+#Render
+gunicorn==21.2.0
